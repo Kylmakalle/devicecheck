@@ -38,7 +38,9 @@ Visit https://developer.apple.com/account/resources/authkeys/list and create new
 
 # Install
 
-`pip install devicecheck`
+```
+pip install devicecheck
+```
 
 # Usage (Python)
 
