@@ -24,7 +24,7 @@ setuptools.setup(
     version=get_version("devicecheck/__init__.py"),
     author="Sergey Akentev",
     author_email='"S. Akentev" <gh+sergey@akentev.com>',
-    description="Apple DeviceCheck API. Validate, query and modify per-device data stored on Apple servers.",
+    description="Apple DeviceCheck API. Reduce fraudulent use of your services by managing device state and asserting app integrity.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Kylmakalle/devicecheck",
