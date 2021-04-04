@@ -1,5 +1,5 @@
 """
-Implementation of Apple DeviceCheck API
+Python Implementation of Apple DeviceCheck API
 https://developer.apple.com/documentation/devicecheck/accessing_and_modifying_per-device_data
 
 https://github.com/Kylmakalle/devicecheck
