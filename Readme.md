@@ -13,27 +13,28 @@ Use a token from your app to validate requests, query and modify two per-device 
     - [Update bits data](#update-bits-data)
     - [Query bits data](#query-bits-data)
 - [Web server decorators](#web-server-decorators)
+  - [Sync code](#sync-code)
     - [Flask](#flask)
+  - [Async code](#async-code)
     - [Sanic](#sanic)
     - [FastAPI](#fastapi)
-    - [Django Rest Framework (DRF)](#django-rest-framework-drf)
-- [Tests](#tests)
+- [Tests & Mock](#tests--mock)
 - [Exceptions](#exceptions)
 - [Usage (Swift)](#usage-swift)
     - [Generate device token](#generate-device-token)
     - [Pass device token in HTTP request](#pass-device-token-in-http-request)
 - [License](#license)
 
-
 # Features
+
 - Prevent API & Content abuse with validating requests via Apple device token
 - Query and modify two bits of data to achieve up to **four remote states** saved on Apple servers
 - Easy to use configuration
-- Examples
+- [Examples](tests/integration)
 - Integrations with modern web frameworks
 
-
 # Prepare
+
 Visit https://developer.apple.com/account/resources/authkeys/list and create new **Key** with **DeviceCheck** permission
 
 # Install
@@ -102,10 +103,12 @@ else:
 
 # Web server decorators
 
-You can easily integrate devicecheck to your webserver using a decorator. The only thing there depends on a framework is a response that will be preventivelly returned if device check failed.
+You can easily integrate devicecheck to your webserver using a decorator. Specify a supported framework, or leave `None`
+to try universal parser.
 
 ```python
-from devicecheck.decorators import validate_device
+from devicecheck.decorators import validate_device  # for sync code
+from devicecheck.decorators import DCSupportedFrameworks
 from devicecheck import DeviceCheck
 
 device_check = DeviceCheck(...)
@@ -113,39 +116,86 @@ device_check = DeviceCheck(...)
 # Set response that will be returned on invalid token
 INVALID_TOKEN_RESPONSE = ('Invalid device_token', 403)
 
+
 @app.route('/validate')
-@validate_device(device_check, on_invalid_token=INVALID_TOKEN_RESPONSE)
+@validate_device(device_check, framework=DCSupportedFrameworks.flask, on_invalid_token=INVALID_TOKEN_RESPONSE)
 def endpoint():
     return 'Content'
 ```
 
+## Sync code
+
+Use sync decorator
+
+```python
+from devicecheck.decorators import validate_device
+from devicecheck.decorators import DCSupportedFrameworks
+```
+
 ### Flask
+
 ```python
 INVALID_TOKEN_RESPONSE = ('Invalid device_token', 403)
+framework = DCSupportedFrameworks.flask
 ```
-### Sanic
-```python
-from sanic.response import text
-
-INVALID_TOKEN_RESPONSE = text('Invalid device_token', status=403)
-```
-
-### FastAPI
-```python
-INVALID_TOKEN_RESPONSE = ('Invalid device_token', 403)
-```
-
+<!-- 
 ### Django Rest Framework (DRF)
+
 ```python
 from rest_framework.response import Response
 from rest_framework import status
 
-INVALID_TOKEN_RESPONSE = Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
+INVALID_TOKEN_RESPONSE = Response('Invalid device_token', status=status.HTTP_403_FORBIDDEN)
+framework = DCSupportedFrameworks.drf
 ```
 
-# Tests
-Well, it's kinda hard to automate testing, because Devicecheck requires real device (Simulators won't work).
-In case you need to mock/disable decorators, pass `SKIP_DEVICE_CHECK_DECORATOR=True` environment variable.
+### Django
+
+```python
+from django.http import HttpResponse
+
+INVALID_TOKEN_RESPONSE = HttpResponse('Invalid device_token', status_code=403)
+framework = DCSupportedFrameworks.django
+```
+ -->
+
+## Async code
+
+Use Async decorator
+
+```python
+from devicecheck.decorators import async_validate_device
+from devicecheck.decorators import DCSupportedAsyncFrameworks
+```
+
+### Sanic
+
+```python
+from sanic.response import text
+
+INVALID_TOKEN_RESPONSE = text('Invalid device_token', status=403)
+framework = DCSupportedAsyncFrameworks.sanic
+```
+
+### FastAPI
+
+```python
+from fastapi.responses import PlainTextResponse
+
+INVALID_TOKEN_RESPONSE = PlainTextResponse('Invalid device_token', status_code=403)
+framework = DCSupportedAsyncFrameworks.fastapi
+```
+
+# Tests & Mock
+Well, it's kinda hard to automate testing, because Devicecheck requires real device (Simulators won't work). In case you
+need to disable decorators, pass `SKIP_DEVICE_CHECK_DECORATOR=True` environment variable.
+
+You can also mock validation, pass `MOCK_DEVICE_CHECK_DECORATOR_TOKEN=XXXXXXXXXXXXX`, it will be a hardcoded valid token
+value.
+
+```bash
+MOCK_DEVICE_CHECK_DECORATOR_TOKEN="device-check-token" python -m unittest tests/integrational/main.py
+```
 
 For Debug logs, including requests body, pass a `DEBUG` environment variable.
 
@@ -210,7 +260,7 @@ getDeviceToken { deviceToken in
 }
 ```
 
-
 # License
+
 MIT
 

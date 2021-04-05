@@ -1,0 +1,21 @@
+name: Tests
+on: [push, pull_request]
+jobs:
+  run:
+    runs-on: ubuntu-18.04
+    - uses: actions/checkout@master
+    - name: Set up Python 3.6
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.6
+
+    - name: Run tests
+      run: |
+        pip install requirements-test.txt
+        MOCK_DEVICE_CHECK_DECORATOR_TOKEN="TEST" coverage run -m unittest tests/integration/main.py
+
+    - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          flags: unittests
+          fail_ci_if_error: true
