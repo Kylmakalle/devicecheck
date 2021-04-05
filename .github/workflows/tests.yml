@@ -11,7 +11,7 @@ jobs:
 
     - name: Run tests
       run: |
-        pip install requirements-test.txt
+        pip install -r requirements-test.txt
         MOCK_DEVICE_CHECK_DECORATOR_TOKEN="TEST" coverage run -m unittest tests/integration/main.py
 
     - name: Upload Coverage to Codecov
