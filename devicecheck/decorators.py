@@ -10,7 +10,7 @@ log = logging.getLogger('devicecheck:decorator')
 logging.basicConfig()
 
 if os.environ.get('DEBUG') == 'True':
-    log.setLevel(logging.DEBUG)
+    log.setLevel(logging.DEBUG)  # pragma: no cover
 
 class DCSupportedFrameworks:
     flask = 'flask'
