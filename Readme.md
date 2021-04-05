@@ -1,5 +1,7 @@
 # Apple DeviceCheck <!-- omit in toc -->
 
+<!-- [![codecov](https://codecov.io/gh/Kylmakalle/devicecheck/branch/main/graph/badge.svg?token=2IKMSQUGH3)](https://codecov.io/gh/Kylmakalle/devicecheck) -->
+
 [Accessing and Modifying Per-Device Data](https://developer.apple.com/documentation/devicecheck/accessing_and_modifying_per-device_data)
 
 Use a token from your app to validate requests, query and modify two per-device binary digits stored on Apple servers.
