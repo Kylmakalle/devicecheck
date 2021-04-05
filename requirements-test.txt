@@ -2,8 +2,11 @@ flask==1.1.2
 djangorestframework==3.12.4
 django==3.1.7
 fastapi==0.63.0
-requests==2.25.1
 sanic==21.3.2
 sanic-testing==0.3.0
 uvicorn==0.13.4
 coverage==5.5
+
+PyJWT==2.0.1
+requests==2.25.1
+cryptography==3.4.7
