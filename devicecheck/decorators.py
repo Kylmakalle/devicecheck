@@ -12,7 +12,6 @@ logging.basicConfig()
 if os.environ.get('DEBUG') == 'True':
     log.setLevel(logging.DEBUG)  # pragma: no cover
 
-
 class DCSupportedFrameworks:
     flask = 'flask'
     drf = 'rest_framework'
