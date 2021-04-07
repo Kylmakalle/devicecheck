@@ -10,3 +10,4 @@ coverage==5.5
 PyJWT==2.0.1
 requests==2.25.1
 cryptography==3.4.7
+requests-mock==1.8.0

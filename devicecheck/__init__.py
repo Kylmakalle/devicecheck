@@ -377,7 +377,12 @@ def get_private_key_string(private_key_or_path: [str, typing.IO]) -> str:
             else:
                 pk_fullpath = os.path.join(get_script_directory(), private_key_or_path)
                 if not os.path.isfile(pk_fullpath):
-                    raise ValueError('Please specify full path to .p8 file')
+                    pk_fullpath = os.path.join(os.getcwd(), private_key_or_path)
+                    if not os.path.isfile(pk_fullpath):
+                        print(pk_fullpath)
+                        pk_fullpath = os.path.join(os.curdir, private_key_or_path)
+                        if not os.path.isfile(pk_fullpath):
+                            raise ValueError('Please specify full path to .p8 file')
                 log.debug('Provided relative path to .p8 key')
             with open(pk_fullpath) as pk_file:
                 private_key = pk_file.read()

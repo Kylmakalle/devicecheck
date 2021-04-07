@@ -12,6 +12,7 @@ logging.basicConfig()
 if os.environ.get('DEBUG') == 'True':
     log.setLevel(logging.DEBUG)  # pragma: no cover
 
+
 class DCSupportedFrameworks:
     flask = 'flask'
     drf = 'rest_framework'
@@ -162,7 +163,7 @@ def validate_device(device_check_instance: DeviceCheck,
                     if hasattr(argument, 'body') or hasattr(argument, 'headers'):
                         request = argument
 
-            if not request:
+            if not request:  # pragma: no cover
                 raise ValueError('Unable to extract request object. Try to specify "framework" option')
 
             is_valid = False
