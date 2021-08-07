@@ -1,31 +1,10 @@
-# Apple DeviceCheck <!-- omit in toc -->
+# Apple DeviceCheck
 
 <!-- [![codecov](https://codecov.io/gh/Kylmakalle/devicecheck/branch/main/graph/badge.svg?token=2IKMSQUGH3)](https://codecov.io/gh/Kylmakalle/devicecheck) -->
 
 [Accessing and Modifying Per-Device Data](https://developer.apple.com/documentation/devicecheck/accessing_and_modifying_per-device_data)
 
 Use a token from your app to validate requests, query and modify two per-device binary digits stored on Apple servers.
-
-- [Features](#features)
-- [Prepare](#prepare)
-- [Install](#install)
-- [Usage (Python)](#usage-python)
-    - [Setup](#setup)
-    - [Validate device](#validate-device)
-    - [Update bits data](#update-bits-data)
-    - [Query bits data](#query-bits-data)
-- [Web server decorators](#web-server-decorators)
-  - [Sync code](#sync-code)
-    - [Flask](#flask)
-  - [Async code](#async-code)
-    - [Sanic](#sanic)
-    - [FastAPI](#fastapi)
-- [Tests & Mock](#tests--mock)
-- [Exceptions](#exceptions)
-- [Usage (Swift)](#usage-swift)
-    - [Generate device token](#generate-device-token)
-    - [Pass device token in HTTP request](#pass-device-token-in-http-request)
-- [License](#license)
 
 # Features
 
@@ -264,5 +243,5 @@ getDeviceToken { deviceToken in
 
 # License
 
-MIT
+[MIT](LICENSE)
 
