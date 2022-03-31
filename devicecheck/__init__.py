@@ -74,7 +74,7 @@ class HttpAppleResponse:
         Returns True if response has code 200 and there're no errors.
         :return: bool
         """
-        if "Bit State Not Found" not in self.description:
+        if self.description not in ("Bit State Not Found", "Failed to find bit state"):
             return self.status_code == 200
         else:
             return False
