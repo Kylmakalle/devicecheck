@@ -4,7 +4,7 @@ https://developer.apple.com/documentation/devicecheck/accessing_and_modifying_pe
 
 https://github.com/Kylmakalle/devicecheck
 """
-__version__ = "1.2.1"
+__version__ = "1.2.2"
 __author__ = 'Sergey Akentev (@Kylmakalle)'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2021 Sergey Akentev'
@@ -209,12 +209,12 @@ class DeviceCheck:
         self.raise_on_error = raise_on_error
         self._session = requests.Session()
 
-    def generate_token(self, valid_time: int = 1200, force_refresh=False):
+    def generate_token(self, valid_time: int = 500, force_refresh=False):
         """
         Generate JWT token to communicate with Apple
         https://help.apple.com/developer-account/#/deva05921840
         :param valid_time: Set a time window in seconds for token to be valid. MAX 1200 seconds (20 minutes).
-                                                                                            Defaults to 1200.
+                                                                                            Defaults to 500.
         :param force_refresh: `True` to refresh token on every request. `False` to use cached token. Defaults to `False`
         :return:
         """
