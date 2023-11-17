@@ -45,6 +45,9 @@ setuptools.setup(
         "pyjwt>=2.0.0",
         "cryptography>=3.4.7"
     ],
+    extras_require={
+        'async': ['aiohttp>=3.8']
+    },
     packages=["devicecheck"],
     python_requires=">=3.6",
 )

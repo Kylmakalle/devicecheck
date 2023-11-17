@@ -42,6 +42,12 @@ device_check = DeviceCheck(
 )
 ```
 
+### Asyncio setup
+```python
+from devicecheck.asyncio import AsyncioDeviceCheck
+```
+The rest will be the same, except for network methods must be `await`'ed
+
 ### Validate device
 
 ```python

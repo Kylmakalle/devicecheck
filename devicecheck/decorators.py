@@ -5,6 +5,7 @@ import os
 from functools import wraps
 
 from . import DeviceCheck, AppleException
+from .asyncio import AsyncioDeviceCheck
 
 log = logging.getLogger('devicecheck:decorator')
 logging.basicConfig()
@@ -63,13 +64,22 @@ def _is_valid_device(device_check_instance: DeviceCheck, token: str):
         return False  # pragma: no cover
 
 
-def async_validate_device(device_check_instance: DeviceCheck,
+async def _is_valid_device_async(device_check_instance: AsyncioDeviceCheck, token: str):
+    if MOCK_DEVICE_CHECK_DECORATOR_TOKEN:
+        return token == MOCK_DEVICE_CHECK_DECORATOR_TOKEN
+    try:  # pragma: no cover
+        return await device_check_instance.validate_device_token(token).is_ok  # pragma: no cover
+    except AppleException:  # pragma: no cover
+        return False  # pragma: no cover
+
+
+def async_validate_device(device_check_instance: AsyncioDeviceCheck,
                           framework: [DCSupportedAsyncFrameworks, str] = None,
                           on_invalid_token=('Invalid device token', 403)):
     """
     Async Decorator that validates device token provided in `Device-Token` header
                             or `device_token`/`deviceToken` key in json body.
-    :param device_check_instance: Instance of DeviceCheck module for validating
+    :param device_check_instance: Instance of AsyncioDeviceCheck module for validating
     :param framework: Name of used async framework for automated data extraction. Leave `None` to rely on a universal parser.
     :param on_invalid_token: Object that will be returned if validation was unsuccessful
     :return: on_invalid_token variable
@@ -104,7 +114,7 @@ def async_validate_device(device_check_instance: DeviceCheck,
             device_token = await async_extract_device_token(request, framework)
             if device_token:
                 try:
-                    is_valid = _is_valid_device(device_check_instance, device_token)
+                    is_valid = await _is_valid_device_async(device_check_instance, device_token)
                 except Exception as e:  # pragma: no cover
                     log.error(f'DeviceCheck request failed. {e}')  # pragma: no cover
             if is_valid:

@@ -2,7 +2,7 @@ from sanic import Sanic
 from sanic.response import text
 
 from devicecheck.decorators import async_validate_device, DCSupportedAsyncFrameworks
-from tests.integration.devicecheck_mock import device_check
+from tests.integration.asynciodevicecheck_mock import device_check
 
 app = Sanic(__name__)
 INVALID_TOKEN_RESPONSE = text('Invalid device_token', 403)

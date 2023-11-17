@@ -4,10 +4,10 @@ https://developer.apple.com/documentation/devicecheck/accessing_and_modifying_pe
 
 https://github.com/Kylmakalle/devicecheck
 """
-__version__ = "1.2.2"
+__version__ = "1.3.0"
 __author__ = 'Sergey Akentev (@Kylmakalle)'
 __license__ = 'MIT'
-__copyright__ = 'Copyright 2021 Sergey Akentev'
+__copyright__ = 'Copyright 2023 Sergey Akentev'
 
 import logging
 import os
@@ -207,7 +207,11 @@ class DeviceCheck:
             log.warning("Using Development environment. Remember to set dev_environment=False in production!")
         self.retry_wrong_env_request = retry_wrong_env_request
         self.raise_on_error = raise_on_error
-        self._session = requests.Session()
+        self._session = self._make_session()
+
+    @staticmethod
+    def _make_session() -> requests.Session:
+        return requests.Session()
 
     def generate_token(self, valid_time: int = 500, force_refresh=False):
         """
