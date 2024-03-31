@@ -7,7 +7,7 @@ https://github.com/Kylmakalle/devicecheck
 __version__ = "1.3.0"
 __author__ = 'Sergey Akentev (@Kylmakalle)'
 __license__ = 'MIT'
-__copyright__ = 'Copyright 2023 Sergey Akentev'
+__copyright__ = 'Copyright 2024 Sergey Akentev'
 
 import logging
 import os
