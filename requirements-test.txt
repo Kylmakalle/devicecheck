@@ -1,3 +1,5 @@
+-e '.[async]'
+
 Flask==1.1.1
 djangorestframework==3.12.4
 django==3.1.8
@@ -10,9 +12,4 @@ uvicorn==0.13.4
 coverage==5.5
 werkzeug==2.0.1
 
-# https://github.com/jpadilla/pyjwt/issues/311#issuecomment-798830656
-# PyJWT==2.0.1
-https://github.com/Kylmakalle/pyjwt/archive/devicecheck-pubkey-verify.zip
-requests==2.25.1
-cryptography==3.4.7
 requests-mock==1.8.0

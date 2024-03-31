@@ -42,7 +42,7 @@ setuptools.setup(
     ],
     install_requires=[
         "requests>=2.20.0",
-        "pyjwt>=2.0.0",
+        "pyjwt>=2.8.0",
         "cryptography>=3.4.7"
     ],
     extras_require={
