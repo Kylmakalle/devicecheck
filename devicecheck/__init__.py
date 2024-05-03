@@ -4,7 +4,7 @@ https://developer.apple.com/documentation/devicecheck/accessing_and_modifying_pe
 
 https://github.com/Kylmakalle/devicecheck
 """
-__version__ = "1.3.1"
+__version__ = "1.3.3"
 __author__ = 'Sergey Akentev (@Kylmakalle)'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2024 Sergey Akentev'
