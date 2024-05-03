@@ -4,7 +4,7 @@ https://developer.apple.com/documentation/devicecheck/accessing_and_modifying_pe
 
 https://github.com/Kylmakalle/devicecheck
 """
-__version__ = "1.3.0"
+__version__ = "1.3.1"
 __author__ = 'Sergey Akentev (@Kylmakalle)'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2024 Sergey Akentev'
@@ -14,6 +14,7 @@ import os
 import sys
 import typing
 import uuid
+import json
 from time import time
 
 import jwt
@@ -162,15 +163,14 @@ class DataAppleResponse:
         }
 
 
-def parse_apple_response(response: requests.Response, raise_on_error: bool):
-    response_text = response.text
+def parse_apple_response(response_text: str, response_status_code: int, raise_on_error: bool):
     if response_text:
         try:
-            response_json = response.json()
-            return DataAppleResponse(response.status_code, response_json, raise_on_error)
+            response_json = json.loads(response_text)
+            return DataAppleResponse(response_status_code, response_json, raise_on_error)
         except:
             pass
-    return HttpAppleResponse(response.status_code, response_text, raise_on_error)
+    return HttpAppleResponse(response_status_code, response_text, raise_on_error)
 
 
 class DeviceCheck:
@@ -271,7 +271,7 @@ class DeviceCheck:
         }
 
         result = self._request(self.get_request_url(), endpoint, payload, *args, **kwargs)
-        return parse_apple_response(result, self.raise_on_error)
+        return parse_apple_response(result.text, result.status_code, self.raise_on_error)
 
     def query_two_bits(self, token: str, *args, **kwargs) -> DataAppleResponse:
         """
@@ -289,7 +289,7 @@ class DeviceCheck:
             'device_token': token
         }
         result = self._request(self.get_request_url(), endpoint, payload, *args, **kwargs)
-        return parse_apple_response(result, self.raise_on_error)
+        return parse_apple_response(result.text, result.status_code, self.raise_on_error)
 
     def update_two_bits(self, token: str, bit_0: [bool, int] = None, bit_1: [bool, int] = None, *args,
                         **kwargs) -> HttpAppleResponse:
@@ -317,7 +317,7 @@ class DeviceCheck:
             payload['bit1'] = bool(bit_1)
 
         result = self._request(self.get_request_url(), endpoint, payload, *args, **kwargs)
-        return parse_apple_response(result, self.raise_on_error)
+        return parse_apple_response(result.text, result.status_code, self.raise_on_error)
 
     def get_request_url(self, is_dev_env: bool = None):
         """

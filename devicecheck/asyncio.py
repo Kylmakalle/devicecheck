@@ -30,8 +30,8 @@ class AsyncioDeviceCheck(DeviceCheck):
             'device_token': token
         }
 
-        result = await self._request(self.get_request_url(), endpoint, payload, *args, **kwargs)
-        return parse_apple_response(result, self.raise_on_error)
+        result_status_code, result_text = await self._request(self.get_request_url(), endpoint, payload, *args, **kwargs)
+        return parse_apple_response(result_text, result_status_code, self.raise_on_error)
 
     async def query_two_bits(self, token: str, *args, **kwargs) -> DataAppleResponse:
         """
@@ -48,8 +48,8 @@ class AsyncioDeviceCheck(DeviceCheck):
             'transaction_id': get_transaction_id(),
             'device_token': token
         }
-        result = await self._request(self.get_request_url(), endpoint, payload, *args, **kwargs)
-        return parse_apple_response(result, self.raise_on_error)
+        result_status_code, result_text = await self._request(self.get_request_url(), endpoint, payload, *args, **kwargs)
+        return parse_apple_response(result_text, result_status_code, self.raise_on_error)
 
     async def update_two_bits(self, token: str, bit_0: [bool, int] = None, bit_1: [bool, int] = None, *args,
                         **kwargs) -> HttpAppleResponse:
@@ -76,8 +76,8 @@ class AsyncioDeviceCheck(DeviceCheck):
         if bit_1 is not None:
             payload['bit1'] = bool(bit_1)
 
-        result = await self._request(self.get_request_url(), endpoint, payload, *args, **kwargs)
-        return parse_apple_response(result, self.raise_on_error)
+        result_status_code, result_text = await self._request(self.get_request_url(), endpoint, payload, *args, **kwargs)
+        return parse_apple_response(result_text, result_status_code, self.raise_on_error)
 
     async def _request(self, url, endpoint, payload, retrying_env=False, *args, **kwargs):
         log.debug(f'Sending request to {url}/{endpoint} with data {payload}')
