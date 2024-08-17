@@ -8,7 +8,6 @@ from . import DeviceCheck, AppleException
 from .asyncio import AsyncioDeviceCheck
 
 log = logging.getLogger('devicecheck:decorator')
-logging.basicConfig()
 
 if os.environ.get('DEBUG') == 'True':
     log.setLevel(logging.DEBUG)  # pragma: no cover
